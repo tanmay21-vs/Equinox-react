@@ -1,7 +1,3 @@
-# Equinox MERN migration (working migration baseline)
-
-This package preserves the original HTML/CSS/DOM interface in a React/Vite shell and introduces an Express/Mongoose backend. The original PHP source is not included in this output; it remains untouched in the uploaded archive.
-
 ## Requirements
 - Node.js 20+ and npm
 - MongoDB 7+ running locally or a MongoDB Atlas connection string
