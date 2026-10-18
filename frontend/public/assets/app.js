@@ -1,3 +1,52 @@
+
+const PROHIBITED_CONTENT = [
+  "assassination",
+  "assassinate",
+  "murder",
+  "homicide",
+  "terrorism",
+  "terrorist",
+  "bomb making",
+  "human trafficking",
+  "rape",
+  "sexual assault",
+  "child abuse",
+  "child exploitation",
+  "pornography",
+  "porn",
+  "sex",
+  "sexual services",
+  "prostitution",
+  "drug trafficking",
+  "cocaine",
+  "heroin",
+  "methamphetamine",
+  "scam",
+  "fraud",
+  "blackmail",
+  "extortion",
+  "money laundering",
+  "kidnapping",
+  "suicide assistance"
+];
+
+function findProhibitedContent(value = "") {
+  const text = String(value)
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[\u200B-\u200D\uFEFF]/g, "");
+
+  return PROHIBITED_CONTENT.find((word) => {
+    const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(
+      `(^|[^\\p{L}\\p{N}_])${escaped}(?=$|[^\\p{L}\\p{N}_])`,
+      "u"
+    );
+
+    return pattern.test(text);
+  }) || null;
+}
+
 const state = {
   token: localStorage.getItem("equinox_token") || "",
   data: null,
@@ -251,6 +300,20 @@ document.getElementById("upi-payment-form").addEventListener("submit", async (ev
 document.getElementById("skill-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const payload = Object.fromEntries(new FormData(event.target).entries());
+  
+  const blockedSkillWord = findProhibitedContent(
+    `${payload.skill_name || ""} ${payload.description || ""}`
+  );
+  
+  if (blockedSkillWord) {
+    showToast(
+      "Listing rejected",
+      "Your skill name or description contains prohibited content. Please revise it.",
+      "error"
+    );
+    return;
+  }
+  
   payload.rate_per_hour = Number(payload.rate_per_hour);
   const response = await api("/api/skills", "POST", payload, true);
 
@@ -267,6 +330,20 @@ document.getElementById("skill-form").addEventListener("submit", async (event) =
 document.getElementById("pool-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const payload = Object.fromEntries(new FormData(event.target).entries());
+  
+  const blockedPoolWord = findProhibitedContent(
+    `${payload.title || ""} ${payload.description || ""}`
+  );
+  
+  if (blockedPoolWord) {
+    showToast(
+      "Pool creation rejected",
+      "Your pool title or description contains prohibited content. Please revise it.",
+      "error"
+    );
+    return;
+  }
+  
   payload.target_amount = Number(payload.target_amount);
   if (payload.deadline) {
     payload.deadline = payload.deadline.replace("T", " ") + ":00";
