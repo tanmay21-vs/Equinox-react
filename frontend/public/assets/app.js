@@ -34,8 +34,13 @@ const sectionMeta = {
     subtitle: "Discover peers, inspect trust levels, and prefill secure wallet transfers in one click.",
   },
   "query-lab": {
+<<<<<<< HEAD
     title: "Query Demonstrator",
     subtitle: "Run named, read-only MongoDB query presets for a clean demonstration flow.",
+=======
+    title: "SQL Demonstrator",
+    subtitle: "Run preset joins or your own read-only queries against live MySQL data for a clean demonstration flow.",
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
   },
 };
 
@@ -44,16 +49,26 @@ const staticPages = {
     title: "About Equinox",
     body: `
       <h4>Beyond Money</h4>
+<<<<<<< HEAD
       <p>Equinox is a reciprocity finance platform where community contribution is tracked as Equinox Credits (Eq) inside a MongoDB-backed payment and trust ecosystem.</p>
       <p>This build combines wallet activation, virtual card issuance, QR-based transfers, community funding, service contracts, trust scoring, and read-only database views inside one professional interface.</p>
       <p>The aim is to help your DBMS project feel product-grade while still keeping the data model, application services, queries, and operational flows easy to explain during demonstration.</p>
+=======
+      <p>Equinox is a reciprocity finance platform where community contribution is tracked as Equinox Credits (Eq) inside a MySQL-backed payment and trust ecosystem.</p>
+      <p>This build combines wallet activation, virtual card issuance, QR-based transfers, community funding, service contracts, trust scoring, and live SQL views inside one professional interface.</p>
+      <p>The aim is to help your DBMS project feel product-grade while still keeping the data model, procedures, joins, and operational flows easy to explain during demonstration.</p>
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
     `,
   },
   privacy: {
     title: "Privacy Policy",
     body: `
       <h4>Local Project Privacy Scope</h4>
+<<<<<<< HEAD
       <p>This project stores profile, wallet, card, contract, transaction, payment order, review, and login audit data within the configured MongoDB database <code>equinox_dbms</code>.</p>
+=======
+      <p>This project stores profile, wallet, card, contract, transaction, payment order, review, and login audit data within the local MySQL schema <code>equinox_dbms</code>.</p>
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
       <p>Card CVV values are hashed before storage. Only the one-time issuance response reveals the generated CVV in the user interface.</p>
       <p>Location and device details are retained strictly for demonstration of audit, fraud-awareness, and database logging concepts inside the local evaluation environment.</p>
     `,
@@ -63,17 +78,28 @@ const staticPages = {
     body: `
       <h4>Demo Usage Terms</h4>
       <p>Equinox is an academic product demonstration. Eq is a project currency and not legal tender.</p>
+<<<<<<< HEAD
       <p>Wallet activation and card issuance require verified payment success in the application flow, while the ledger, cards, notifications, and trust records remain backed by MongoDB collections and application services.</p>
       <p>The Query Demonstrator runs named, read-only MongoDB presets. Arbitrary SQL execution is not supported in this migration.</p>
+=======
+      <p>Wallet activation and card issuance require verified payment success in the application flow, while the ledger, cards, notifications, and trust records remain backed by real MySQL tables and procedures.</p>
+      <p>The SQL Demonstrator is limited to safe read-only statements so the database state stays intact during project presentations.</p>
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
     `,
   },
   support: {
     title: "Support",
     body: `
       <h4>Environment Checks</h4>
+<<<<<<< HEAD
       <p>If a payment or dashboard flow is not responding, confirm that MongoDB is running as a replica set, your backend environment is configured, and Razorpay test credentials are set if you are testing checkout.</p>
       <p>If Razorpay checkout does not open, check internet connectivity in the browser and verify that the Razorpay test key and secret are set in the backend environment.</p>
       <p>For a reliable live demo: register two citizens, activate one wallet, issue a card, send a QR payment, and then validate the database state using the read-only Query Demonstrator presets.</p>
+=======
+      <p>If a payment or dashboard flow is not responding, confirm that MySQL is running, the schema has been imported successfully, and your <code>.env</code> file contains the correct database password and Razorpay test credentials.</p>
+      <p>If Razorpay checkout does not open, check internet connectivity in the browser and verify that the Razorpay test key and secret are set in the backend environment.</p>
+      <p>For a reliable live demo: register two citizens, activate one wallet, issue a card, send a QR payment, and then validate the database state using the SQL Demonstrator presets.</p>
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
     `,
   },
 };
@@ -205,9 +231,12 @@ ui.loginForm.addEventListener("submit", async (event) => {
 document.getElementById("payment-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const payload = Object.fromEntries(new FormData(event.target).entries());
+<<<<<<< HEAD
   // The form uses receiver_wallet, while the backend transfer API expects wallet_id.
   payload.wallet_id = String(payload.receiver_wallet || "").trim();
   delete payload.receiver_wallet;
+=======
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
   payload.amount = Number(payload.amount);
   Object.assign(payload, await getCoords());
   const response = await api("/api/wallet/transfer", "POST", payload, true);
@@ -653,6 +682,7 @@ function renderTransactions(items) {
 
   ui.recentTransactions.innerHTML = recent.length
     ? recent.map((item) => {
+<<<<<<< HEAD
         const incoming = item.transaction_type !== "POOL" && item.receiver_wallet === walletId;
         const pendingUpi = item.status === "PENDING" && /^UPI Payment initiated/i.test(item.note || "");
         const amountClass = pendingUpi ? "list-meta" : incoming ? "amount-positive" : "amount-negative";
@@ -668,6 +698,20 @@ function renderTransactions(items) {
               <p class="list-meta">${escapeHtml(item.status)}${item.latitude ? ` • GPS ${escapeHtml(item.latitude)}, ${escapeHtml(item.longitude)}` : ""}</p>
             </div>
             <div class="${amountClass}">${amountText}</div>
+=======
+        const incoming = item.receiver_wallet === walletId;
+        const amountClass = incoming ? "amount-positive" : "amount-negative";
+        const sign = incoming ? "+" : "-";
+        const counterpart = incoming ? item.sender_name || "System" : item.receiver_name || "Citizen";
+        return `
+          <div class="list-item">
+            <div>
+              <p class="list-title">${escapeHtml(prettyTransactionType(item.transaction_type))} • ${escapeHtml(counterpart)}</p>
+              <p class="list-subtitle">${escapeHtml(item.note || "No payment note provided")} • ${formatDate(item.created_at)}</p>
+              <p class="list-meta">${escapeHtml(item.status)}${item.latitude ? ` • GPS ${escapeHtml(item.latitude)}, ${escapeHtml(item.longitude)}` : ""}</p>
+            </div>
+            <div class="${amountClass}">${sign}${formatEq(item.amount)} Eq</div>
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
           </div>
         `;
       }).join("")
@@ -988,7 +1032,10 @@ async function beginPaymentFlow(purpose, extra = {}) {
 
   if (typeof window.Razorpay === "undefined") {
     state.paymentLocked = false;
+<<<<<<< HEAD
     await api("/api/payments/abandon-order", "POST", { payment_order_id: response.payment_order?.payment_order_id, outcome: "CANCELLED", reason: "Razorpay Checkout library was unavailable in the browser." }, true);
+=======
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
     showToast("Checkout library unavailable", "Razorpay Checkout did not load in the browser. Check connectivity and try again.", "error");
     return;
   }
@@ -997,12 +1044,19 @@ async function beginPaymentFlow(purpose, extra = {}) {
   const options = {
     ...response.checkout,
     modal: {
+<<<<<<< HEAD
       ondismiss: async () => {
         if (state.paymentLocked) {
           state.paymentLocked = false;
           await api("/api/payments/abandon-order", "POST", { payment_order_id: orderId, outcome: "CANCELLED", reason: "Checkout was dismissed before verification completed." }, true);
           showToast("Checkout closed", "The payment window was closed before verification was completed.", "warning");
           await loadDashboard({ silent: true });
+=======
+      ondismiss: () => {
+        if (state.paymentLocked) {
+          state.paymentLocked = false;
+          showToast("Checkout closed", "The payment window was closed before verification was completed.", "warning");
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
         }
       },
     },
@@ -1011,6 +1065,7 @@ async function beginPaymentFlow(purpose, extra = {}) {
     },
   };
 
+<<<<<<< HEAD
   try {
     const checkout = new window.Razorpay(options);
     checkout.on("payment.failed", async (failure) => {
@@ -1029,6 +1084,20 @@ async function beginPaymentFlow(purpose, extra = {}) {
     await api("/api/payments/abandon-order", "POST", { payment_order_id: orderId, outcome: "CANCELLED", reason: "Razorpay Checkout could not be opened." }, true);
     showToast("Checkout unavailable", "Razorpay Checkout could not be opened. No fulfillment was confirmed.", "error");
   }
+=======
+  const checkout = new window.Razorpay(options);
+  checkout.on("payment.failed", async (failure) => {
+    state.paymentLocked = false;
+    const failureMessage =
+      failure?.error?.description ||
+      failure?.error?.reason ||
+      "Razorpay did not complete the payment successfully.";
+    showToast("Payment failed", failureMessage, "error");
+    await loadDashboard({ silent: true });
+  });
+
+  checkout.open();
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
 }
 
 async function verifyCompletedPayment(paymentOrderId, gatewayResponse, coords, purpose) {
@@ -1070,14 +1139,22 @@ async function runQuery(sql, preset) {
     ui.queryMeta.textContent = response.error || "Query execution failed.";
     ui.querySqlOutput.textContent = "";
     ui.queryTableWrap.innerHTML = emptyState("No query result to display.");
+<<<<<<< HEAD
     showToast("Query failed", response.error || "The selected read-only preset could not be executed.", "error");
+=======
+    showToast("Query failed", response.error || "The SQL statement could not be executed.", "error");
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
     switchSection("query-lab");
     return;
   }
 
   renderQueryResult(response);
   switchSection("query-lab");
+<<<<<<< HEAD
   showToast("Query executed", "Live MongoDB preset results have been loaded into the demonstrator.", "success");
+=======
+  showToast("Query executed", "Live MySQL results have been loaded into the demonstrator.", "success");
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
 }
 
 function renderQueryResult(result) {

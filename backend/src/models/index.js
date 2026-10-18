@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import mongoose from 'mongoose';
+<<<<<<< HEAD
 
 const { Schema, model } = mongoose;
 const options = { timestamps: true, strict: false };
@@ -75,3 +76,12 @@ models.Review.schema.index({ reviewer_id: 1, subject_id: 1, contract_id: 1 }, { 
 models.Card.schema.index({ user_id: 1, slot: 1 }, { unique: true, name: 'uniq_card_slot_per_user', partialFilterExpression: { slot: { $type: 'number' } } });
 models.PaymentOrder.schema.index({ user_id: 1, purpose: 1 }, { unique: true, name: 'uniq_open_activation_order', partialFilterExpression: { status: 'CREATED', purpose: 'WALLET_ACTIVATION' } });
 models.PaymentOrder.schema.index({ user_id: 1, purpose: 1, 'metadata.reserved_card_slot': 1 }, { unique: true, name: 'uniq_reserved_card_slot', partialFilterExpression: { status: 'CREATED', purpose: 'CARD_ISSUANCE', 'metadata.reserved_card_slot': { $exists: true } } });
+=======
+const {Schema,model}=mongoose;
+const opts={timestamps:true,strict:false};
+const userSchema=new Schema({_id:{type:String,default:()=>crypto.randomUUID()},full_name:{type:String,required:true,trim:true},email:{type:String,required:true,unique:true,lowercase:true,trim:true},password_hash:{type:String,required:true},phone_number:String,date_of_birth:{type:String,required:true},location_city:String,trust_score:{type:Number,default:50},kyc_status:{type:String,default:'PENDING'}},opts);
+const walletSchema=new Schema({_id:{type:String,default:()=>crypto.randomUUID()},user_id:{type:String,ref:'User',required:true,unique:true},balance:{type:Number,default:0},status:{type:String,enum:['DORMANT','ACTIVE'],default:'DORMANT'}},opts);
+const schemas={Card:{user_id:String,wallet_id:String,card_number:String,card_name:String,expiry:String,cvv_hash:String,is_frozen:{type:Boolean,default:false},status:String,issued_via_payment_order_id:String},PaymentOrder:{user_id:String,purpose:String,amount:Number,currency:String,status:String,provider_order_id:String,provider_payment_id:String,metadata:Schema.Types.Mixed},Transaction:{sender_wallet:String,receiver_wallet:String,amount:Number,transaction_type:String,status:String,note:String,latitude:Number,longitude:Number,device_fingerprint:String},Pool:{creator_id:String,title:String,description:String,target_amount:Number,raised_amount:{type:Number,default:0},deadline:Date,status:{type:String,default:'ACTIVE'},verified:{type:Boolean,default:false}},Contribution:{pool_id:String,donor_wallet:String,amount:Number},Skill:{user_id:String,skill_name:String,description:String,rate_per_hour:Number,is_active:{type:Boolean,default:true}},Contract:{provider_id:String,consumer_id:String,skill_id:String,hours:Number,total_eq:Number,status:{type:String,default:'OPEN'}},Review:{reviewer_id:String,subject_id:String,contract_id:String,rating:Number,comment:String},TrustHistory:{user_id:String,score_delta:Number,reason:String},Notification:{user_id:String,title:String,message:String,is_read:{type:Boolean,default:false}},LoginHistory:{user_id:String,ip_address:String,user_agent:String},Setting:{user_id:String,settings:Schema.Types.Mixed},PaymentAudit:{payment_order_id:String,event_type:String,payload:Schema.Types.Mixed}};
+export const User=model('User',userSchema); export const Wallet=model('Wallet',walletSchema);
+export const models={}; for(const [name,shape] of Object.entries(schemas)){models[name]=mongoose.models[name]||model(name,new Schema({_id:{type:String,default:()=>crypto.randomUUID()},...shape},opts));}
+>>>>>>> 442411461945c4ea333a647c24314f833484790b
