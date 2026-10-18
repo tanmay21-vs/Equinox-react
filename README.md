@@ -27,8 +27,6 @@ This package preserves the original HTML/CSS/DOM interface in a React/Vite shell
 - Backend unit tests: `npm test`
 - Database-backed API and payment workflows require a running MongoDB replica set and valid Razorpay test credentials; do not treat static checks as end-to-end verification.
 
-## API
-`GET /api/health`, `POST /api/register`, `POST /api/login`, authenticated `GET /api/bootstrap`, `POST /api/wallet/transfer`, `POST /api/cards/freeze`, `POST /api/skills`, `POST /api/pools`, `POST /api/pools/contribute`, `POST /api/contracts`, `POST /api/contracts/settle`, `POST /api/reviews`, `POST /api/payments/create-order`, `POST /api/payments/verify`, `POST /api/payments/abandon-order`, `POST /api/payments/upi`, `POST /api/query-demonstrator`, `GET /api/stream`.
 
 ## Security note
 Use only sandbox payment credentials while testing. Review every endpoint and business rule before production use.
