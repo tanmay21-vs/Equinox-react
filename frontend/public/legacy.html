@@ -1,0 +1,776 @@
+
+  <div id="toast-stack" class="toast-stack"></div>
+
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-hero">
+      <div class="hero-site-nav">
+        <div class="site-brand">
+          <p class="eyebrow">EQUINOX</p>
+          <strong>Beyond Money</strong>
+        </div>
+        <div class="hero-site-links">
+          <button class="button ghost small" data-static-page="about">About</button>
+          <button class="button ghost small" data-static-page="privacy">Privacy</button>
+          <button class="button ghost small" data-static-page="terms">Terms</button>
+        </div>
+      </div>
+
+      <div class="hero-copy-block">
+        <p class="eyebrow">Reciprocity Finance Platform</p>
+        <h1>Community payments, MongoDB-backed workflows, and verified checkout flows.</h1>
+        <p class="auth-copy">
+          Equinox combines wallet activation, virtual card issuance, QR payments, trust scoring,
+          marketplace contracts, community pools, and read-only database demonstrations in one polished web
+          experience built for your DBMS project and polished like a product demo.
+        </p>
+      </div>
+
+      <div class="hero-metrics">
+        <article class="glass-card metric-card">
+          <span>Wallet Activation</span>
+          <strong>Rs. 1,500 -> 500 Eq</strong>
+          <small>Verified payment required before the wallet becomes active.</small>
+        </article>
+        <article class="glass-card metric-card">
+          <span>Card Issuance</span>
+          <strong>Rs. 1,500 per virtual card</strong>
+          <small>Cards are created only after successful Razorpay verification.</small>
+        </article>
+        <article class="glass-card metric-card">
+          <span>Database insights</span>
+          <strong>Read-only presets, grouped activity, and ledger views</strong>
+          <small>Use the Query Demonstrator to show live MongoDB preset results.</small>
+        </article>
+      </div>
+
+      <div class="hero-feature-grid">
+        <article class="glass-card feature-tile">
+          <p class="eyebrow">Payments</p>
+          <strong>Razorpay-backed checkout</strong>
+          <p>Every paid action is tracked through payment orders, verification logs, and fulfillment records.</p>
+        </article>
+        <article class="glass-card feature-tile">
+          <p class="eyebrow">Banking Concepts</p>
+          <strong>Wallet, cards, trust, ledger</strong>
+          <p>Card freeze controls, card limits, audit trails, and immutable transaction history are all built in.</p>
+        </article>
+        <article class="glass-card feature-tile">
+          <p class="eyebrow">Demonstration Ready</p>
+          <strong>Professional UX for evaluation day</strong>
+          <p>Clear copy, polished interactions, and live database-backed screens make the presentation flow simpler.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="auth-panel glass-card">
+      <div class="panel-heading">
+        <h2>Citizen Access</h2>
+        <p>Create your Equinox profile or sign in to enter the live command center.</p>
+      </div>
+
+      <div class="tab-switch">
+        <button class="tab-button active" data-auth-tab="register">Register</button>
+        <button class="tab-button" data-auth-tab="login">Login</button>
+      </div>
+
+      <form id="register-form" class="stack-form">
+        <label>
+          <span>Full name</span>
+          <input name="full_name" placeholder="Sai Santosh Randive" required>
+        </label>
+        <label>
+          <span>Email address</span>
+          <input name="email" type="email" placeholder="citizen@equinox.app" required>
+        </label>
+        <label>
+          <span>Password</span>
+          <input name="password" type="password" placeholder="Use at least 6 characters" required>
+        </label>
+        <div class="form-row">
+          <label>
+            <span>Phone number</span>
+            <input name="phone_number" placeholder="9876543210">
+          </label>
+          <label>
+            <span>Date of birth</span>
+            <input name="date_of_birth" type="date" required>
+          </label>
+        </div>
+        <label>
+          <span>City</span>
+          <input name="location_city" placeholder="Pune">
+        </label>
+        <button type="submit" class="button primary wide">Create Citizen Profile</button>
+      </form>
+
+      <form id="login-form" class="stack-form hidden">
+        <label>
+          <span>Email address</span>
+          <input name="email" type="email" placeholder="citizen@equinox.app" required>
+        </label>
+        <label>
+          <span>Password</span>
+          <input name="password" type="password" placeholder="Enter your password" required>
+        </label>
+        <button type="submit" class="button primary wide">Enter Command Center</button>
+      </form>
+
+      <div id="auth-message" class="inline-message"></div>
+    </div>
+  </section>
+
+  <div id="app-shell" class="app-shell hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <p class="eyebrow">EQUINOX</p>
+        <h2>Command Center</h2>
+      </div>
+
+      <div class="glass-card profile-card">
+        <div class="avatar-badge" id="profile-avatar">EC</div>
+        <div>
+          <p id="sidebar-user-name" class="profile-name">Citizen</p>
+          <p id="sidebar-trust-label" class="trust-inline">Trust Level: Neutral</p>
+        </div>
+      </div>
+
+      <button id="nav-new-transfer" class="button primary wide">New Payment</button>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-section-target="command-center">Command Center</button>
+        <button class="nav-item" data-section-target="wallet-hub">Wallet & Transfer</button>
+        <button class="nav-item" data-section-target="cards-payments">Cards & Payments</button>
+        <button class="nav-item" data-section-target="skill-market">Skill Market</button>
+        <button class="nav-item" data-section-target="social-pool">Community Pools</button>
+        <button class="nav-item" data-section-target="citizen-directory">Citizen Directory</button>
+        <button class="nav-item" data-section-target="query-lab">SQL Demonstrator</button>
+      </nav>
+
+      <div class="sidebar-footer-links">
+        <button class="nav-item" data-static-page="about">About</button>
+        <button class="nav-item" data-static-page="support">Support</button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar glass-nav">
+        <div class="topbar-left">
+          <button id="mobile-menu-toggle" class="button ghost mobile-only">Menu</button>
+          <div>
+            <p class="topbar-kicker">React + Express + MongoDB</p>
+            <h1 id="topbar-section-title">Command Center</h1>
+            <p id="topbar-section-subtitle" class="topbar-subtitle">Professional payment operations, trust signals, and database-backed activity in one place.</p>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="show-my-qr-top" class="button ghost">My QR</button>
+          <button id="scan-qr-top" class="button ghost cyan">Scan QR</button>
+          <button id="logout-btn" class="button ghost">Sign Out</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="section active" data-section="command-center">
+          <div class="overview-grid">
+            <article class="glass-card hero-balance-card">
+              <div class="card-glow"></div>
+              <p class="eyebrow">Available Equinox Balance</p>
+              <div class="balance-line">
+                <span id="available-balance" class="balance-value">0.00</span>
+                <span class="balance-unit">Eq</span>
+              </div>
+              <div class="wallet-meta-row">
+                <span id="wallet-status-pill" class="pill">DORMANT</span>
+                <span id="kyc-status-pill" class="pill muted">KYC Pending</span>
+                <span id="checkout-status-pill" class="pill muted">Checkout Pending</span>
+              </div>
+              <p id="wallet-readiness-copy" class="hero-status-copy">
+                Complete the onboarding payment to activate the wallet and unlock your first 500 Eq.
+              </p>
+              <div id="wallet-readiness-list" class="bullet-note compact-list"></div>
+              <div class="quick-action-row">
+                <button id="hero-primary-action" class="button primary">Activate Wallet</button>
+                <button id="hero-secondary-action" class="button ghost cyan">Review Payments</button>
+                <button id="jump-wallet-btn" class="button ghost">Open Wallet</button>
+              </div>
+            </article>
+
+            <article class="glass-card trust-card">
+              <p class="eyebrow">Trust Matrix</p>
+              <div id="trust-ring" class="trust-ring">
+                <div class="trust-ring-center">
+                  <strong id="trust-score-value">50</strong>
+                  <span id="trust-score-tier">Neutral</span>
+                </div>
+              </div>
+              <div class="trust-detail-row">
+                <div>
+                  <span>VOL</span>
+                  <strong id="trust-volume-label">Building</strong>
+                </div>
+                <div>
+                  <span>REP</span>
+                  <strong id="trust-rep-label">Stable</strong>
+                </div>
+                <div>
+                  <span>AGE</span>
+                  <strong id="trust-age-label">0 Days</strong>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="stats-grid">
+            <article class="glass-card stat-card">
+              <span>Total Sent</span>
+              <strong id="stat-total-sent">0.00 Eq</strong>
+              <small>Outgoing ledger value</small>
+            </article>
+            <article class="glass-card stat-card">
+              <span>Total Received</span>
+              <strong id="stat-total-received">0.00 Eq</strong>
+              <small>Incoming reciprocity</small>
+            </article>
+            <article class="glass-card stat-card">
+              <span>Fiat Paid</span>
+              <strong id="stat-fiat-paid">Rs. 0.00</strong>
+              <small>Verified checkout value</small>
+            </article>
+            <article class="glass-card stat-card">
+              <span>Virtual Cards</span>
+              <strong id="stat-card-count">0</strong>
+              <small>Up to 3 cards per wallet</small>
+            </article>
+          </div>
+
+          <div class="dual-grid">
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Recent Reciprocity</h3>
+                <button class="button ghost small" data-section-shortcut="wallet-hub">Open Wallet</button>
+              </div>
+              <div id="recent-transactions" class="stack-list"></div>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Payment Operations</h3>
+                <span id="payment-count-pill" class="pill cyan">0 Orders</span>
+              </div>
+              <div id="command-payment-feed" class="stack-list"></div>
+            </article>
+          </div>
+
+          <div class="dual-grid">
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Notifications</h3>
+                <span id="notification-count-pill" class="pill cyan">0 Unread</span>
+              </div>
+              <div id="notification-feed" class="stack-list"></div>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Security Activity</h3>
+                <span class="section-note">Recent login records and audit-friendly access history</span>
+              </div>
+              <div id="security-feed" class="stack-list compact"></div>
+            </article>
+          </div>
+
+          <article class="glass-card">
+            <div class="section-heading">
+              <h3>Trust Activity</h3>
+              <span class="section-note">Review submissions and contract completions feed the trust engine.</span>
+            </div>
+            <div id="trust-feed" class="stack-list compact"></div>
+          </article>
+        </section>
+
+        <section class="section hidden" data-section="wallet-hub">
+          <div class="dual-grid">
+            <article class="glass-card wallet-identity-card">
+              <div class="section-heading">
+                <h3>Wallet Identity</h3>
+                <button id="copy-wallet-id-btn" class="button ghost small">Copy Wallet ID</button>
+              </div>
+              <p class="muted-label">Full wallet ID</p>
+              <p id="wallet-id-full" class="mono-block">-</p>
+              <p class="muted-label">QR payload</p>
+              <p id="wallet-qr-payload" class="payload-preview">-</p>
+              <div class="quick-action-row top-space">
+                <button id="wallet-show-qr-btn" class="button primary">Generate QR</button>
+                <button id="wallet-scan-qr-btn" class="button ghost cyan">Scan & Pay</button>
+              </div>
+
+              <div class="divider top-space bottom-space"></div>
+
+              <div class="section-heading">
+                <h3>Pay by UPI ID</h3>
+                <span class="section-note">Alternative payment method</span>
+              </div>
+              <form id="upi-payment-form" class="stack-form">
+                <label>
+                  <span>UPI ID</span>
+                  <input id="upi-id-input" name="upi_id" placeholder="example@upi" required>
+                </label>
+                <label>
+                  <span>Amount (Rs.)</span>
+                  <input id="upi-amount-input" name="upi_amount" type="number" min="1" step="0.01" placeholder="1500" required>
+                </label>
+                <button type="submit" class="button ghost cyan wide">Send via UPI</button>
+              </form>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Send Eq Payment</h3>
+                <span class="section-note">Transfer by wallet ID, QR scan, or citizen directory selection.</span>
+              </div>
+              <form id="payment-form" class="stack-form">
+                <label>
+                  <span>Receiver wallet UUID</span>
+                  <input id="receiver-wallet-input" name="receiver_wallet" placeholder="Paste or scan the receiver wallet ID" required>
+                </label>
+                <div class="form-row">
+                  <label>
+                    <span>Amount</span>
+                    <input name="amount" type="number" min="1" step="0.01" placeholder="20" required>
+                  </label>
+                  <label>
+                    <span>Card to use</span>
+                    <select id="payment-card-select" name="card_id">
+                      <option value="">Use wallet directly</option>
+                    </select>
+                  </label>
+                </div>
+                <label>
+                  <span>Payment note / reference</span>
+                  <input id="payment-note-input" name="note" placeholder="Python tutoring, contribution share, scanned reference">
+                </label>
+                <button type="submit" class="button primary wide">Confirm Transfer</button>
+              </form>
+            </article>
+          </div>
+
+          <div class="dual-grid">
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Card Preview</h3>
+                <span class="section-note">Only active cards can be selected for a transfer reference.</span>
+              </div>
+              <div id="wallet-card-preview" class="cards-strip"></div>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Recent Transaction Audit</h3>
+                <span class="section-note">Inspect timestamps, transaction types, and recorded references.</span>
+              </div>
+              <div id="wallet-transaction-audit" class="stack-list compact"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section hidden" data-section="cards-payments">
+          <div class="dual-grid">
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Issue Virtual Card</h3>
+                <span class="section-note">Each card requires a verified Rs. 1,500 Razorpay payment.</span>
+              </div>
+              <form id="card-order-form" class="stack-form">
+                <label>
+                  <span>Card label</span>
+                  <input name="card_name" placeholder="Primary, Work, Savings" maxlength="30">
+                </label>
+                <button type="submit" class="button primary wide">Continue to Razorpay</button>
+              </form>
+              <p id="card-program-note" class="hint-text">
+                Card issuance remains unavailable until the wallet is active. The backend enforces the three-card limit.
+              </p>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Identity & Wallet Summary</h3>
+                <span class="section-note">Live citizen information from the current database session.</span>
+              </div>
+              <div class="kyc-grid">
+                <div class="detail-block">
+                  <span>Name</span>
+                  <strong id="kyc-name">-</strong>
+                </div>
+                <div class="detail-block">
+                  <span>Email</span>
+                  <strong id="kyc-email">-</strong>
+                </div>
+                <div class="detail-block">
+                  <span>Phone</span>
+                  <strong id="kyc-phone">-</strong>
+                </div>
+                <div class="detail-block">
+                  <span>City</span>
+                  <strong id="kyc-city">-</strong>
+                </div>
+                <div class="detail-block">
+                  <span>KYC Status</span>
+                  <strong id="kyc-status-text">Pending</strong>
+                </div>
+                <div class="detail-block">
+                  <span>Wallet Status</span>
+                  <strong id="kyc-wallet-status">Dormant</strong>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <article class="glass-card top-space">
+            <div class="section-heading">
+              <h3>Virtual Card Control Panel</h3>
+              <span class="section-note">Freeze and unfreeze cards instantly after issuance.</span>
+            </div>
+            <div id="cards-grid" class="cards-grid"></div>
+          </article>
+
+          <article class="glass-card top-space">
+            <div class="section-heading">
+              <h3>Payment History</h3>
+              <span class="section-note">Razorpay orders, verification status, and fulfillment progress.</span>
+            </div>
+            <div id="payments-history" class="stack-list"></div>
+          </article>
+        </section>
+
+        <section class="section hidden" data-section="skill-market">
+          <div class="dual-grid">
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Publish Skill Listing</h3>
+                <span class="section-note">Offer a service and set the Eq rate per hour.</span>
+              </div>
+              <form id="skill-form" class="stack-form">
+                <label>
+                  <span>Skill name</span>
+                  <input name="skill_name" placeholder="Python Tutoring" required>
+                </label>
+                <label>
+                  <span>Description</span>
+                  <textarea name="description" placeholder="Describe the service you offer"></textarea>
+                </label>
+                <label>
+                  <span>Rate per hour (Eq)</span>
+                  <input name="rate_per_hour" type="number" min="1" placeholder="20" required>
+                </label>
+                <button type="submit" class="button primary wide">Publish Listing</button>
+              </form>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Contract Settlement</h3>
+                <span class="section-note">Create, settle, and review marketplace engagements.</span>
+              </div>
+              <div id="contracts-grid" class="cards-grid"></div>
+            </article>
+          </div>
+
+          <article class="glass-card top-space">
+            <div class="section-heading">
+              <h3>Marketplace Listings</h3>
+              <span class="section-note">Browse live offerings and convert them into service contracts.</span>
+            </div>
+            <div id="skills-grid" class="cards-grid"></div>
+          </article>
+        </section>
+
+        <section class="section hidden" data-section="social-pool">
+          <div class="dual-grid">
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Create Community Pool</h3>
+                <span class="section-note">Community funding with trigger-driven raised totals.</span>
+              </div>
+              <form id="pool-form" class="stack-form">
+                <label>
+                  <span>Pool title</span>
+                  <input name="title" placeholder="Urban Garden Initiative" required>
+                </label>
+                <label>
+                  <span>Description</span>
+                  <textarea name="description" placeholder="Explain the initiative and intended impact"></textarea>
+                </label>
+                <div class="form-row">
+                  <label>
+                    <span>Target Eq</span>
+                    <input name="target_amount" type="number" min="1" step="0.01" placeholder="150" required>
+                  </label>
+                  <label>
+                    <span>Deadline</span>
+                    <input name="deadline" type="datetime-local" required>
+                  </label>
+                </div>
+                <button type="submit" class="button primary wide">Create Pool</button>
+              </form>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Funding Notes</h3>
+                <span class="section-note">Community pool contributions remain fully database-backed.</span>
+              </div>
+              <ul class="bullet-note">
+                <li>Wallet debit and contribution insertion happen together through the contribution procedure.</li>
+                <li>The pool total grows automatically through the raised amount trigger.</li>
+                <li>Pool status can close itself when the target is reached.</li>
+              </ul>
+            </article>
+          </div>
+
+          <article class="glass-card top-space">
+            <div class="section-heading">
+              <h3>Community Pools</h3>
+              <span class="section-note">Live progress bars, contribution counts, and creator data.</span>
+            </div>
+            <div id="pools-grid" class="cards-grid"></div>
+          </article>
+        </section>
+
+        <section class="section hidden" data-section="citizen-directory">
+          <article class="glass-card">
+            <div class="section-heading">
+              <h3>Citizen Directory</h3>
+              <span class="section-note">Find peers, inspect trust levels, and prefill secure transfers instantly.</span>
+            </div>
+            <div id="directory-grid" class="cards-grid"></div>
+          </article>
+        </section>
+
+        <section class="section hidden" data-section="query-lab">
+          <div class="dual-grid">
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Read-only Query Demonstrator</h3>
+                <span class="section-note">Join-based presets for viva-friendly live database demonstrations.</span>
+              </div>
+              <div id="query-preset-list" class="chip-group"></div>
+            </article>
+
+            <article class="glass-card">
+              <div class="section-heading">
+                <h3>Custom Read-Only SQL</h3>
+                <span class="section-note">Only SELECT, SHOW, DESCRIBE, DESC, or EXPLAIN statements are allowed.</span>
+              </div>
+              <form id="custom-query-form" class="stack-form">
+                <label>
+                  <span>SQL</span>
+                  <textarea name="sql" placeholder="SELECT * FROM payment_orders ORDER BY created_at DESC LIMIT 10"></textarea>
+                </label>
+                <button type="submit" class="button primary wide">Execute Query</button>
+              </form>
+            </article>
+          </div>
+
+          <article class="glass-card top-space">
+            <div class="section-heading">
+              <h3>Query Results</h3>
+              <span id="query-meta" class="section-note">Choose a preset or enter a read-only query.</span>
+            </div>
+            <pre id="query-sql-output" class="query-sql"></pre>
+            <div id="query-table-wrap" class="table-wrap"></div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="app-footer glass-nav">
+        <div class="footer-copy">
+          <strong>Equinox DBMS</strong>
+          <span>MongoDB database: `equinox_dbms`</span>
+        </div>
+        <div class="footer-links">
+          <button data-static-page="about">About</button>
+          <button data-static-page="privacy">Privacy</button>
+          <button data-static-page="terms">Terms</button>
+          <button data-static-page="support">Support</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div id="qr-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-panel glass-card">
+      <button class="modal-close" data-close-modal="qr-modal">Close</button>
+      <div class="section-heading">
+        <h3>My Dynamic Wallet QR</h3>
+        <span class="section-note">Scan this code to load the receiver wallet during a payment.</span>
+      </div>
+      <div id="qr-render" class="qr-render"></div>
+      <p id="qr-wallet-label" class="payload-preview"></p>
+      <button id="copy-qr-payload-btn" class="button ghost cyan wide">Copy QR Payload</button>
+    </div>
+  </div>
+
+  <div id="scan-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-panel glass-card">
+      <button class="modal-close" data-close-modal="scan-modal">Close</button>
+      <div class="section-heading">
+        <h3>Scan QR for Payment</h3>
+        <span class="section-note">Camera scanning and manual payload entry are both available.</span>
+      </div>
+      <div id="qr-scanner" class="scanner-shell"></div>
+      <form id="manual-scan-form" class="stack-form top-space">
+        <label>
+          <span>Manual QR text / wallet ID</span>
+          <input name="manual_payload" placeholder='{"wallet_id":"..."} or raw UUID'>
+        </label>
+        <button type="submit" class="button ghost cyan wide">Use Manual Payload</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="page-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-panel glass-card large">
+      <button class="modal-close" data-close-modal="page-modal">Close</button>
+      <div class="section-heading">
+        <h3 id="page-modal-title">Static Page</h3>
+        <span class="section-note">Professional product information and support details.</span>
+      </div>
+      <div id="page-modal-body" class="page-content"></div>
+    </div>
+  </div>
+
+  <div id="contract-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-panel glass-card">
+      <button class="modal-close" data-close-modal="contract-modal">Close</button>
+      <div class="section-heading">
+        <h3>Create Service Contract</h3>
+        <span id="contract-modal-subtitle" class="section-note">Hire a citizen from the skill marketplace.</span>
+      </div>
+      <form id="contract-form" class="stack-form">
+        <input type="hidden" name="skill_id">
+        <label>
+          <span>Hours required</span>
+          <input name="hours" type="number" min="1" value="1" required>
+        </label>
+        <button type="submit" class="button primary wide">Create Contract</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="contribute-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-panel glass-card">
+      <button class="modal-close" data-close-modal="contribute-modal">Close</button>
+      <div class="section-heading">
+        <h3>Contribute to Pool</h3>
+        <span id="contribute-modal-subtitle" class="section-note">Atomic wallet debit with progress updates.</span>
+      </div>
+      <form id="contribute-form" class="stack-form">
+        <input type="hidden" name="pool_id">
+        <label>
+          <span>Contribution amount (Eq)</span>
+          <input name="amount" type="number" min="1" step="0.01" required>
+        </label>
+        <button type="submit" class="button primary wide">Contribute Now</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="review-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-panel glass-card">
+      <button class="modal-close" data-close-modal="review-modal">Close</button>
+      <div class="section-heading">
+        <h3>Submit Review</h3>
+        <span id="review-modal-subtitle" class="section-note">Trust scores update automatically after review submission.</span>
+      </div>
+      <form id="review-form" class="stack-form">
+        <input type="hidden" name="contract_id">
+        <input type="hidden" name="subject_id">
+        <label>
+          <span>Rating</span>
+          <select name="rating" required>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Strong</option>
+            <option value="3">3 - Good</option>
+            <option value="2">2 - Needs improvement</option>
+            <option value="1">1 - Poor</option>
+          </select>
+        </label>
+        <label>
+          <span>Comment</span>
+          <textarea name="comment" placeholder="Describe the service quality and overall reciprocity experience"></textarea>
+        </label>
+        <button type="submit" class="button primary wide">Submit Review</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="issued-card-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-panel glass-card">
+      <button class="modal-close" data-close-modal="issued-card-modal">Close</button>
+      <div class="section-heading">
+        <h3>Virtual Card Issued</h3>
+        <span class="section-note">This card was created only after successful payment verification.</span>
+      </div>
+      <div class="credential-grid">
+        <div class="detail-block">
+          <span>Card Label</span>
+          <strong id="issued-card-label">-</strong>
+        </div>
+        <div class="detail-block">
+          <span>Card Number</span>
+          <strong id="issued-card-number">-</strong>
+        </div>
+        <div class="detail-block">
+          <span>Expiry</span>
+          <strong id="issued-card-expiry">-</strong>
+        </div>
+        <div class="detail-block">
+          <span>CVV</span>
+          <strong id="issued-card-cvv">-</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/vendor/qrcode.min.js"></script>
+  <script src="/vendor/html5-qrcode.min.js"></script>
+  <script>
+    // Suppress ALL Razorpay errors and biometric collection in development
+    window.suppressRazorpayErrors = true;
+    const originalError = console.error;
+    console.error = function(...args) {
+      const msg = String(args[0] || '');
+      if (msg.includes('Refused to get unsafe header') ||
+          msg.includes('Permissions policy') ||
+          msg.includes('localhost:7070') ||
+          msg.includes('sardine')) {
+        return; // Silently ignore Razorpay errors
+      }
+      return originalError.apply(console, args);
+    };
+
+    // Block all Razorpay tracking requests
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+      const url = String(args[0] || '');
+      if (url.includes('localhost:7070') || url.includes('localhost:37857') ||
+          url.includes('sardine.ai') || url.includes('fingerprint')) {
+        return Promise.reject(new Error('Blocked'));
+      }
+      return originalFetch.apply(this, args);
+    };
+
+    // Override XMLHttpRequest to block problematic headers
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(method, url) {
+      if (String(url).includes('localhost:7070') || String(url).includes('sardine')) {
+        this.abort();
+        return;
+      }
+      return originalOpen.apply(this, arguments);
+    };
+  </script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
+  <script src="/assets/app.js"></script>
